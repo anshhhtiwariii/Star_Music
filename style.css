@@ -1,0 +1,104 @@
+/* ROOT VARIABLES: Dual Theme logic */
+:root {
+    /* The "X" Color - Vibrant Violet used in Headers/Footers */
+    --x-color: #7986cb; 
+    --x-text-color: #ffffff; /* Text on top of the X color */
+
+    /* Light Theme Body Colors */
+    --bg-color: #ffffff;
+    --text-color: #121212;
+    --secondary-bg: #f0f0f0;
+}
+
+.dark-theme {
+    /* Dark Theme Body Colors */
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --secondary-bg: #222222;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; -webkit-tap-highlight-color: transparent; }
+body { background-color: var(--bg-color); color: var(--text-color); transition: background 0.3s, color 0.3s; overflow-x: hidden; }
+
+/* HEADER (Uses X Color) */
+header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; position: sticky; top: 0; background: var(--x-color); color: var(--x-text-color); z-index: 10; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+.logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.logo-icon-svg { height: 32px; width: 32px; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.4)); }
+.logo-container h1 { font-size: 1.3rem; font-weight: bold; }
+.menu-icon { cursor: pointer; font-size: 28px; }
+
+/* SIDEBAR */
+.sidebar { position: fixed; top: 0; right: -300px; width: 250px; height: 100vh; background: var(--secondary-bg); z-index: 1000; transition: right 0.3s ease; padding: 20px; }
+.sidebar.active { right: 0; }
+.close-btn { display: flex; justify-content: flex-end; cursor: pointer; margin-bottom: 20px; }
+.sidebar ul { list-style: none; }
+.sidebar ul li { display: flex; align-items: center; gap: 15px; padding: 15px 0; border-bottom: 1px solid rgba(150,150,150,0.2); cursor: pointer; }
+.overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
+
+/* MAIN CONTENT */
+main { padding: 0 0 80px 0; } 
+.page { display: none; padding: 20px; }
+.page.active { display: block; animation: fadeIn 0.3s; }
+
+/* HOME SCROLL CARDS */
+.playlist-row { margin-bottom: 25px; }
+.playlist-row h2 { font-size: 1.1rem; margin-bottom: 10px; }
+.scroll-container { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+.card { width: 140px; flex-shrink: 0; cursor: pointer; transition: transform 0.2s; }
+.card:active { transform: scale(0.95); }
+.card img { width: 100%; height: 140px; border-radius: 8px; object-fit: cover; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+.card p { margin-top: 5px; font-size: 0.9rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* SEARCH, EXPLORE, AND LIBRARY (GRID) */
+.search-bar { width: 100%; padding: 12px; border-radius: 20px; border: none; background: var(--secondary-bg); color: var(--text-color); margin-bottom: 20px; font-size: 1rem; outline: none; }
+.grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.grid-item { background: var(--secondary-bg); padding: 30px 10px; border-radius: 8px; text-align: center; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+.grid-item:active { filter: brightness(0.8); }
+.library-item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.library-item span { font-size: 36px; color: var(--x-color); }
+
+/* BOTTOM NAV (Uses X Color) */
+.bottom-nav { position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; background: var(--x-color); padding: 10px 0; z-index: 10; box-shadow: 0 -2px 10px rgba(0,0,0,0.2); }
+.nav-btn { background: none; border: none; color: rgba(255,255,255,0.6); display: flex; flex-direction: column; align-items: center; font-size: 0.75rem; cursor: pointer; transition: color 0.2s; }
+.nav-btn.active { color: var(--x-text-color); font-weight: bold; }
+.nav-btn span { font-size: 24px; margin-bottom: 3px; }
+
+/* INNER PLAYER MODAL */
+.player-modal { position: fixed; top: 100vh; left: 0; width: 100vw; height: 100vh; background: var(--bg-color); z-index: 2000; display: flex; flex-direction: column; padding: 20px; transition: top 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+.player-modal.active { top: 0; }
+.player-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; cursor: pointer; }
+.player-tabs { display: flex; gap: 20px; font-weight: bold; font-size: 0.9rem; color: gray; }
+.player-tabs span.active { color: var(--x-color); border-bottom: 2px solid var(--x-color); }
+
+/* Cover / Lyrics */
+.player-middle { display: flex; justify-content: center; align-items: center; height: 300px; margin-bottom: 20px; cursor: pointer; }
+.player-middle img { width: 300px; height: 300px; border-radius: 12px; object-fit: cover; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+.player-middle .lyrics { width: 100%; height: 100%; overflow-y: auto; text-align: center; font-size: 1.2rem; display: none; padding: 20px; background: var(--secondary-bg); border-radius: 10px; }
+.player-middle img.active, .player-middle .lyrics.active { display: block; animation: fadeIn 0.3s; }
+
+/* Info & Actions */
+.player-info { text-align: left; margin-bottom: 20px; }
+.song-title { font-size: 1.8rem; font-weight: bold; margin-bottom: 5px; }
+.song-artist { font-size: 1rem; color: gray; }
+
+/* Interactive Action Buttons */
+.action-buttons { display: flex; justify-content: space-between; padding: 0 20px; margin-bottom: 25px; }
+.action-icon { font-size: 28px; cursor: pointer; transition: color 0.2s, transform 0.2s; color: var(--text-color); }
+.action-icon:active { transform: scale(0.8); }
+.action-icon.filled { font-variation-settings: 'FILL' 1; color: var(--x-color); }
+
+/* Progress & Controls */
+.progress-container { margin-bottom: 20px; }
+input[type="range"] { width: 100%; cursor: pointer; accent-color: var(--x-color); height: 6px; border-radius: 3px; }
+.time-info { display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 8px; color: gray; }
+
+.controls { display: flex; justify-content: space-between; align-items: center; padding: 0 10px; margin-bottom: 25px; }
+.controls span { font-size: 45px; cursor: pointer; transition: transform 0.1s; }
+.controls span:active { transform: scale(0.9); }
+.controls .play-btn { font-size: 70px; color: var(--x-color); font-variation-settings: 'FILL' 1; }
+.controls .small-btn { font-size: 28px; color: gray; }
+.controls .small-btn.active { color: var(--x-color); }
+
+.volume-container { display: flex; align-items: center; gap: 10px; padding: 0 20px; color: gray; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
